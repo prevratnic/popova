@@ -1,3 +1,5 @@
+package zadanie2;
+
 /**
  * Author: Ilya Varlamov aka privr@tnik
  * Date: 29.03.12
