@@ -8,7 +8,7 @@ import java.util.Iterator;
  * Time: 12:52
  */
 
-public class Tree implements Iterable {
+public class TreeSet implements Iterable {
 
     private Node root;
     private int counterNode;
@@ -48,11 +48,51 @@ public class Tree implements Iterable {
 
     }
 
-    public void delete( int data ){
-        recursionTree( root );
+    public boolean delete( int data ){
+
+        if( root == null ) return false;
+        
+        Node current = root;
+        Node parent = root;
+        boolean flag = false;
+
+        while(data != current.getData()){
+            parent = current;
+            if( data < current.getData() ){
+                flag = true;
+                current = current.getLeftNode();
+            }else{
+                flag = false;
+                current = current.getRightNode();
+            }
+
+        }
+
+        if( current.getLeftNode() == null && current.getRightNode() == null ){
+            if( current == root ){
+                root = null;
+            }
+
+        }
+        
+       return false;
     }
 
-    public void find( int data ){
+    public Node find( int data ){
+
+        if( root == null ) return null;
+
+        Node current = root;
+
+        while( data != current.getData() ){
+            if( data < current.getData() ){
+                current = current.getLeftNode();
+            }else{
+                current = current.getRightNode();
+            }
+        }
+
+        return current;
 
     }
 
@@ -60,19 +100,9 @@ public class Tree implements Iterable {
         return counterNode;
     }
 
-    public void recursionTree( Node root ){
-        if( root != null ){
-            recursionTree( root.getLeftNode() );
-            System.out.println( root.getData() );
-            //recursionTree( root.getRightNode() );
-        }
-
-        //return null;
-    }
-
     @Override
     public String toString(){
-        return "Tree {" + "\n" +
+        return "TreeSet {" + "\n" +
                 " root = " + root +
                 "\n}";
     }
@@ -81,6 +111,9 @@ public class Tree implements Iterable {
     public Iterator iterator(){
 
         return new Iterator(){
+
+            private Node current = root;
+            private Node parent = current;
 
             private int count = counterNode;
 
@@ -97,26 +130,16 @@ public class Tree implements Iterable {
 
             @Override
             public Object next(){
+                if( current.getLeftNode() != null ){
 
-                Node current = root;
-                Node parent = current;
-
-                if( root != null ){
-                    for(;;){
-                        if( current.getLeftNode() == null ){
-                            return parent;
-                        }
-                        parent = current;
-                    }
                 }
 
                 return null;
             }
 
             @Override
-            public void remove() {
+            public void remove(){}
 
-            }
         };
 
     }

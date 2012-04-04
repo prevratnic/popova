@@ -8,7 +8,8 @@ package zadanie1;
 
 public class Main1 {
     public static void main(String... args){
-        Tree tree = new Tree();
+
+        TreeSet tree = new TreeSet();
         tree.add(5);
         tree.add(2);
         tree.add(10);
@@ -19,7 +20,11 @@ public class Main1 {
 
         int tmp = 0;
 
-        tree.delete(1);
+       // tree.delete(1);
+
+        System.out.println( tree.find( 101 ) );
+
+
 
 //        for( Object test : tree ){
 //            System.out.println( test );

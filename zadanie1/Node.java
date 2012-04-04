@@ -1,7 +1,5 @@
 package zadanie1;
 
-import java.util.Iterator;
-
 /**
  * Author: Ilya Varlamov aka privr@tnik
  * Date: 03.04.12
@@ -43,11 +41,11 @@ public class Node {
 
     @Override
     public String toString() {
-        return "Node { " +
+        return "" + data; /** "Node { " +
                 " data = " + data  +
                 " leftNode = " + leftNode +
                 " RightNode = " + rightNode +
-                "  }";
+                "  }";*/
     }
 
 }
