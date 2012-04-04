@@ -1,5 +1,7 @@
 package zadanie1;
 
+import java.util.Scanner;
+
 /**
  * Author: Ilya Varlamov aka privr@tnik
  * Date: 29.03.12
@@ -7,28 +9,41 @@ package zadanie1;
  */
 
 public class Main1 {
+
     public static void main(String... args){
 
         TreeSet tree = new TreeSet();
-        tree.add(5);
-        tree.add(2);
-        tree.add(10);
-        tree.add(1);
-        tree.add(3);
-        tree.add(6);
-        tree.add(16);
 
-        int tmp = 0;
+        userInput( tree, "Первая последовательнось чисел:", "Ввод первой последовательности завершен:", false );
 
-       // tree.delete(1);
+        tree.print();
 
-        System.out.println( tree.find( 101 ) );
+        userInput( tree, "Вторая последовательнось чисел:", "Ввод второй последовательности завершен:", false );
 
+        tree.print();
 
+        userInput( tree, "Третья последовательнось чисел:", "Ввод третьей последовательности завершен:", true );
 
-//        for( Object test : tree ){
-//            System.out.println( test );
-//        }
+        tree.print();
+
+        System.out.print( "\n\n" + "Программа завершена" );
+    }
+
+    private static void userInput(TreeSet treeSet, String first, String second, boolean deleteMerge){
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("\n\n" + first + "\n");
+        for(;;){
+            System.out.print("Введите число: ");
+            String value = scanner.next();
+            if( value.trim().length() > 0 ){
+                if( value.equals("#") )
+                    break;
+                treeSet.add( Integer.valueOf( value ) );
+            }
+        }
+        System.out.print(second + " ");
 
     }
 }

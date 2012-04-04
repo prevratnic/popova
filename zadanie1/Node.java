@@ -41,11 +41,7 @@ public class Node {
 
     @Override
     public String toString() {
-        return "" + data; /** "Node { " +
-                " data = " + data  +
-                " leftNode = " + leftNode +
-                " RightNode = " + rightNode +
-                "  }";*/
+        return Integer.toString( data );
     }
 
 }

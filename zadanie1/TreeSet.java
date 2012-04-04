@@ -8,7 +8,7 @@ import java.util.Iterator;
  * Time: 12:52
  */
 
-public class TreeSet implements Iterable {
+public class TreeSet{
 
     private Node root;
     private int counterNode;
@@ -20,32 +20,33 @@ public class TreeSet implements Iterable {
 
         if( root == null ){
             root = node;
+            counterNode++;
         }else{
 
-            Node current = root;
-            Node parent = current;
+            if( !find(data) ){
 
-            for(;;){
-                if( node.getData() < current.getData() ){
-                    current = current.getLeftNode();
-                    if( current == null ){
-                        parent.setLeftNode( node );
-                        break;
+                Node current = root;
+                Node parent = current;
+
+                for(;;){
+                    if( node.getData() < current.getData() ){
+                        current = current.getLeftNode();
+                        if( current == null ){
+                            parent.setLeftNode( node );
+                            break;
+                        }
+                    } else {
+                        current = current.getRightNode();
+                        if( current == null ){
+                            parent.setRightNode( node );
+                            break;
+                        }
                     }
-                } else {
-                    current = current.getRightNode();
-                    if( current == null ){
-                        parent.setRightNode( node );
-                        break;
-                    }
+                    parent = current;
                 }
-                parent = current;
+                counterNode++;
             }
-
         }
-
-        counterNode++;
-
     }
 
     public boolean delete( int data ){
@@ -78,21 +79,25 @@ public class TreeSet implements Iterable {
        return false;
     }
 
-    public Node find( int data ){
+    public boolean find( int data ){
 
-        if( root == null ) return null;
+        if( root == null ) return false;
 
         Node current = root;
 
-        while( data != current.getData() ){
-            if( data < current.getData() ){
-                current = current.getLeftNode();
-            }else{
-                current = current.getRightNode();
+            try{
+                while( data != current.getData() ){
+                    if( data < current.getData() ){
+                        current = current.getLeftNode();
+                    }else{
+                        current = current.getRightNode();
+                    }
+                }
+            }catch (NullPointerException e){
+                return false;
             }
-        }
 
-        return current;
+        return true;
 
     }
 
@@ -100,48 +105,23 @@ public class TreeSet implements Iterable {
         return counterNode;
     }
 
+    public void print(){
+        traversalDepth( root );
+    }
+
+    private void traversalDepth( Node node ){
+        if( node != null ){
+            traversalDepth( node.getLeftNode() );
+                System.out.print( node.getData() + " " );
+            traversalDepth( node.getRightNode() );
+        }
+    }
+
     @Override
     public String toString(){
         return "TreeSet {" + "\n" +
                 " root = " + root +
                 "\n}";
-    }
-
-    @Override
-    public Iterator iterator(){
-
-        return new Iterator(){
-
-            private Node current = root;
-            private Node parent = current;
-
-            private int count = counterNode;
-
-            @Override
-            public boolean hasNext(){
-
-                if( count > 0 ){
-                    count--;
-                    return true;
-                }
-
-                return false;
-            }
-
-            @Override
-            public Object next(){
-                if( current.getLeftNode() != null ){
-
-                }
-
-                return null;
-            }
-
-            @Override
-            public void remove(){}
-
-        };
-
     }
 
 }
