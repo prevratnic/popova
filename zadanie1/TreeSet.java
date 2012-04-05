@@ -1,7 +1,5 @@
 package zadanie1;
 
-import java.util.Iterator;
-
 /**
  * Author: Ilya Varlamov aka privr@tnik
  * Date: 03.04.12
@@ -55,28 +53,91 @@ public class TreeSet{
         
         Node current = root;
         Node parent = root;
+
         boolean flag = false;
 
-        while(data != current.getData()){
-            parent = current;
-            if( data < current.getData() ){
-                flag = true;
-                current = current.getLeftNode();
-            }else{
-                flag = false;
-                current = current.getRightNode();
+        try{
+            while(data != current.getData()){
+                parent = current;
+                if( data < current.getData() ){
+                    flag = true;
+                    current = current.getLeftNode();
+                }else{
+                    flag = false;
+                    current = current.getRightNode();
+                }
             }
-
+        }catch (NullPointerException e){
+            return false;
         }
 
-        if( current.getLeftNode() == null && current.getRightNode() == null ){
+        if( current.getLeftNode() == null && current.getRightNode() == null ){ // list node
+
             if( current == root ){
                 root = null;
+            }else if( flag ){
+                parent.setLeftNode( null );
+            }else{
+                parent.setRightNode( null );
+            }
+
+        } else if( current.getLeftNode() == null ){ // if not left parent node set left
+
+            if( current == root ){
+                root = current.getRightNode();
+            }else if( flag ){
+                parent.setLeftNode( current.getRightNode() );
+            }else{
+                parent.setRightNode( current.getRightNode() );
+            }
+
+        } else if( current.getRightNode() == null ){ // if not right parent node set right
+
+            if( current == root ){
+                root = current.getLeftNode();
+            }else if( flag ){
+                parent.setLeftNode( current.getLeftNode() );
+            }else{
+                parent.setRightNode( current.getLeftNode() );
+            }
+
+        }else {  // if two children
+
+            Node next = nextNodeAfterRemove( current );
+
+            if( current == root ){
+                root = next;
+            }else if( flag ){
+                parent.setLeftNode( next );
+            }else{
+                parent.setRightNode( next );
             }
 
         }
-        
-       return false;
+
+       counterNode--;
+
+       return true;
+    }
+
+    private Node nextNodeAfterRemove( Node nodeRemove ){
+
+        Node nextParent = nodeRemove;
+        Node next = nodeRemove;
+        Node current = nodeRemove.getLeftNode();
+
+        while ( current != null ){
+            nextParent = next;
+            next = current;
+            current = current.getLeftNode();
+        }
+
+        if( next != nodeRemove.getRightNode() ){
+            nextParent.setLeftNode( next.getRightNode() );
+            next.setRightNode( nodeRemove.getRightNode() );
+        }
+
+        return next;
     }
 
     public boolean find( int data ){

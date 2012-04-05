@@ -6,6 +6,6 @@ package zadanie2;
  * Time: 1:09
  */
 
-public class Main2 {
+public class Main {
 
 }

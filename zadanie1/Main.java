@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Time: 1:04
  */
 
-public class Main1 {
+public class Main {
 
     public static void main(String... args){
 
@@ -40,7 +40,11 @@ public class Main1 {
             if( value.trim().length() > 0 ){
                 if( value.equals("#") )
                     break;
-                treeSet.add( Integer.valueOf( value ) );
+                if( deleteMerge ){
+                    treeSet.delete( Integer.valueOf( value ) );
+                }else{
+                    treeSet.add( Integer.valueOf( value ) );
+                }
             }
         }
         System.out.print(second + " ");
