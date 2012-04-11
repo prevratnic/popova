@@ -9,8 +9,15 @@ package zadanie3;
 public class Main {
 
     public static void main(String[] args) {
+
         PyramidSort pyramidSort = new PyramidSort();
-        pyramidSort.userInput();
-        pyramidSort.print();
+        pyramidSort.print("Случайно составленная последовательность");
+
+        pyramidSort.arrayToPyramid();
+        pyramidSort.print("Пирамида");
+
+        pyramidSort.sortPyramidal();
+        pyramidSort.print("Сортировка пирамиды");
+
     }
 }
