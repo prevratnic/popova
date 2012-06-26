@@ -1,4 +1,4 @@
-package zadanie3;
+package zadanie2;
 
 /**
  * Author: Ilya Varlamov aka privr@tnik
