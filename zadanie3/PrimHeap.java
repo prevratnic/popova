@@ -1,5 +1,7 @@
 package zadanie3;
 
+import java.util.*;
+
 /**
  * Author: Ilya Varlamov aka privr@tnik
  * Date: 26.06.12
@@ -7,35 +9,37 @@ package zadanie3;
  */
 
 public class PrimHeap {
-    public static long mstPrim(int[][] d) {
-        int n = d.length;
-        int[] prev = new int[n];
-        int[] dist = new int[n];
-        //Arrays.fill(dist, Integer.MAX_VALUE);
-        PriorityQueue priorityQueue = new PriorityQueue(n);
 
-
-        dist[0] = 0;
+    public static long mst(List<Edge>[] edges, int[] pred) {
+        int n = edges.length;
+        Arrays.fill(pred, -1);
         boolean[] used = new boolean[n];
+        int[] prio = new int[n];
+        Arrays.fill(prio, Integer.MAX_VALUE);
+        prio[0] = 0;
+
+        java.util.PriorityQueue<Long> q = new java.util.PriorityQueue<Long>();
+        q.add(0L);
+
         long res = 0;
-        for (int steps = 0; steps < n; steps++) {
-          int bdist = Integer.MAX_VALUE;
-          int bi = -1;
-          for (int i = 0; i < n; i++) {
-            if (!used[i] && bdist > dist[i]) {
-              bdist = dist[i];
-              bi = i;
+
+        while (!q.isEmpty()) {
+            long cur = q.poll();
+            int u = (int) cur;
+            if (used[u])
+                continue;
+            used[u] = true;
+            res += cur >>> 32;
+            for (Edge e : edges[u]) {
+                int v = e.t;
+                if (!used[v] && prio[v] > e.cost) {
+                    prio[v] = e.cost;
+                    pred[v] = u;
+                    q.add(((long) prio[v] << 32) + v);
+                }
             }
-          }
-          res += bdist;
-          used[bi] = true;
-          for (int i = 0; i < n; i++) {
-            if (!used[i] && dist[i] > d[bi][i]) {
-              dist[i] = d[bi][i];
-              prev[i] = bi;
-            }
-          }
         }
         return res;
-      }
+    }
+
 }
