@@ -5,6 +5,7 @@ package zadanie1;
  * Date: 03.04.12
  * Time: 13:49
  */
+
 public class Node {
 
     private Node leftNode;
